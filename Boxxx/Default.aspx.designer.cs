@@ -49,6 +49,15 @@ namespace Boxxx {
         protected global::System.Web.UI.UpdatePanel upMain;
         
         /// <summary>
+        /// pnlMainContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMainContent;
+        
+        /// <summary>
         /// lblMsg control.
         /// </summary>
         /// <remarks>
@@ -85,15 +94,6 @@ namespace Boxxx {
         protected global::System.Web.UI.WebControls.Repeater gvNormalStat;
         
         /// <summary>
-        /// gvPlayedChamps control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater gvPlayedChamps;
-        
-        /// <summary>
         /// gvMatchList control.
         /// </summary>
         /// <remarks>
@@ -103,48 +103,12 @@ namespace Boxxx {
         protected global::System.Web.UI.WebControls.GridView gvMatchList;
         
         /// <summary>
-        /// upDetails control.
+        /// gvPlayedChamps control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upDetails;
-        
-        /// <summary>
-        /// lblMsg2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMsg2;
-        
-        /// <summary>
-        /// gvMatchHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMatchHeader;
-        
-        /// <summary>
-        /// gvMatchDetailsA control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMatchDetailsA;
-        
-        /// <summary>
-        /// gvMatchDetailsB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMatchDetailsB;
+        protected global::System.Web.UI.WebControls.GridView gvPlayedChamps;
     }
 }

@@ -183,11 +183,15 @@
     <Content Include="docs\notifications\index.html" />
     <Content Include="docs\profile\index.html" />
     <Content Include="gulpfile.js" />
+    <Content Include="Images\bg6.jpg" />
     <Content Include="Images\Challenger.png" />
+    <Content Include="Images\bg7.jpg" />
     <Content Include="Images\Master.png" />
     <Content Include="Images\Diamond.png" />
+    <Content Include="Images\minus.png" />
     <Content Include="Images\Platinum.png" />
     <Content Include="Images\Gold.png" />
+    <Content Include="Images\plus.png" />
     <Content Include="Images\Silver.png" />
     <Content Include="Images\Bronze.png" />
     <Content Include="Images\bg3.jpg" />
@@ -367,6 +371,9 @@
     <Content Include="less\toolkit.less" />
     <Content Include="less\variables.less" />
     <Content Include="package.json" />
+    <Content Include="favicon.ico" />
+    <None Include="Properties\PublishProfiles\Boxxx - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\Boxxx - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Boxxx.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -377,6 +384,7 @@
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\fakeLoader.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -407,16 +415,13 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Default.aspx" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
-    <Content Include="ViewSwitcher.ascx" />
     <None Include="Web References\GetPlayerService\GetPlayerService.disco" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Site.Mobile.Master" />
     <None Include="Web References\GetPlayerService\GetPlayerService.wsdl" />
     <Content Include="Web References\GetPlayerService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -472,20 +477,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.designer.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="Web References\GetPlayerService\Reference.cs">
       <AutoGen>True</AutoGen>
