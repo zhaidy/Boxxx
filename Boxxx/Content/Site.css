@@ -2,6 +2,8 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    position: relative;
+    font-family: Tahoma, Arial, Helvetica, "Microsoft YaHei New", "Microsoft Yahei", "微软雅黑", 宋体, SimSun, STXihei, "华文细黑", sans-serif;
 }
 
 /* Wrapping element */
@@ -53,4 +55,23 @@ textarea {
 .blur{
    background: rgba(239, 220, 220, 0.14);
    box-shadow: 0px 5px 12px rgba(0,0,0,0.14);
+}
+
+.section-class-name{
+    padding-top: 70px;
+    position: relative;
+    min-height: 100%; 
+}
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none !important;
+}
+
+.tableA th, .tableA td {
+    padding: 10px 5px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetPlayerProfile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="server" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="playerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPlayerProfileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPlayerProfileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getMatch">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="server" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="playerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getMatchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getMatchResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPlayerProfileSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPlayerProfile" />
+  </wsdl:message>
+  <wsdl:message name="GetPlayerProfileSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPlayerProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMatchSoapIn">
+    <wsdl:part name="parameters" element="tns:getMatch" />
+  </wsdl:message>
+  <wsdl:message name="getMatchSoapOut">
+    <wsdl:part name="parameters" element="tns:getMatchResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GetPlayerServiceSoap">
+    <wsdl:operation name="GetPlayerProfile">
+      <wsdl:input message="tns:GetPlayerProfileSoapIn" />
+      <wsdl:output message="tns:GetPlayerProfileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getMatch">
+      <wsdl:input message="tns:getMatchSoapIn" />
+      <wsdl:output message="tns:getMatchSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetPlayerServiceSoap" type="tns:GetPlayerServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPlayerProfile">
+      <soap:operation soapAction="http://tempuri.org/GetPlayerProfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMatch">
+      <soap:operation soapAction="http://tempuri.org/getMatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GetPlayerServiceSoap12" type="tns:GetPlayerServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPlayerProfile">
+      <soap12:operation soapAction="http://tempuri.org/GetPlayerProfile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMatch">
+      <soap12:operation soapAction="http://tempuri.org/getMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetPlayerService">
+    <wsdl:port name="GetPlayerServiceSoap" binding="tns:GetPlayerServiceSoap">
+      <soap:address location="http://localhost/Boxxx/GetPlayerService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GetPlayerServiceSoap12" binding="tns:GetPlayerServiceSoap12">
+      <soap12:address location="http://localhost/Boxxx/GetPlayerService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
