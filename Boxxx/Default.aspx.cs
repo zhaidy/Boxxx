@@ -43,6 +43,32 @@ namespace Boxxx
                 pnlMainContent.Visible = false;
             }
         }
+        protected void NoData()
+        {
+            divMsg.Attributes.Add("style", "display: block;");
+            divLeft.Attributes.Add("style", "display: none;");
+            divMid.Attributes.Add("style", "display: none;");
+            divRight.Attributes.Add("style", "display: none;");
+            gvPlayerProfile.DataSource = null;
+            gvPlayerProfile.DataBind();
+            gvRankStat.DataSource = null;
+            gvRankStat.DataBind();
+            //gvComChamp.DataSource = null;
+            //gvComChamp.DataBind();
+            gvMatchList.DataSource = null;
+            gvMatchList.DataBind();
+            gvNormalStat.DataSource = null;
+            gvNormalStat.DataBind();
+            gvPlayedChamps.DataSource = null;
+            gvPlayedChamps.DataBind();
+        }
+        protected void HaveData()
+        {
+            divMsg.Attributes.Add("style", "display: none;");
+            divLeft.Attributes.Add("style", "display: block;");
+            divMid.Attributes.Add("style", "display: block;");
+            divRight.Attributes.Add("style", "display: block;");
+        }
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             pnlMainContent.Visible = true;
@@ -63,25 +89,13 @@ namespace Boxxx
 
             if (!bodyNode.InnerHtml.Contains("暂无数据"))
             {
-                lblMsg.Text = "";
+                HaveData();
                 sendRequest(server, playerId);
                 parseHtml(server, playerId);
             }
             else
             {
-                lblMsg.Text = "暂无数据";
-                gvPlayerProfile.DataSource = null;
-                gvPlayerProfile.DataBind();
-                gvRankStat.DataSource = null;
-                gvRankStat.DataBind();
-                //gvComChamp.DataSource = null;
-                //gvComChamp.DataBind();
-                gvMatchList.DataSource = null;
-                gvMatchList.DataBind();
-                gvNormalStat.DataSource = null;
-                gvNormalStat.DataBind();
-                gvPlayedChamps.DataSource = null;
-                gvPlayedChamps.DataBind();
+                NoData();
             }
         }
         private void sendRequest(string server, string playerId)
@@ -343,6 +357,10 @@ namespace Boxxx
                 string matchId = hfMatchId.Value;
                 string playerId = lblPlayerId.Text;
                 GridView gvItemsA = e.Item.FindControl("gvItemsA") as GridView;
+                if (playerId == Session["_playerId"].ToString())
+                {
+                    lblPlayerId.Attributes.Add("style", "font-weight: bold;");
+                }
                 var _joinedItemsA = from ma in _matchDetailsA
                                     join ia in _itemA
                                     on new { mId = ma.matchId, pId = ma.playerId } equals new { mId = ia.matchId, pId = ia.playerId }
@@ -411,7 +429,7 @@ namespace Boxxx
                 Label lblPlayerId = (Label)e.Item.FindControl("lblPlayerId");
                 string matchId = hfMatchId.Value;
                 string playerId = lblPlayerId.Text;
-                Repeater gvItemsB = e.Item.FindControl("gvItemsB") as Repeater;
+                GridView gvItemsB = e.Item.FindControl("gvItemsB") as GridView;
                 if (playerId == Session["_playerId"].ToString())
                 {
                     lblPlayerId.Attributes.Add("style", "font-weight: bold;");
@@ -510,7 +528,8 @@ namespace Boxxx
                     });
                 }
             }
-            gvPlayedChamps.DataSource = _played_champs_display;
+            List<played_champs_display> _played_champs_display_sorted = _played_champs_display.OrderByDescending(C => Convert.ToInt32(C.matchStat)).ThenByDescending(C => Convert.ToInt32(C.winRate.Replace("%",""))).ToList();
+            gvPlayedChamps.DataSource = _played_champs_display_sorted;
             gvPlayedChamps.DataBind();
         }
         private void bindGvMatchList(string server, string playerId)

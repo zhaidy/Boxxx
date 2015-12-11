@@ -5,6 +5,8 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
+    <meta name="description" content="LOL段位,英雄联盟,lol,lol战斗力查询,lol隐藏分,lol mmr,英雄联盟战斗力查询,英雄联盟隐藏分查询,多玩lol战斗力查询,英雄联盟战绩查询,lol大神视频,lol大神,lol英雄胜率, lolmvp,lol常用英雄,lol各模式战绩,moba游戏" />
+    <meta name="keywords" content="我不是个善良的人,LOL段位,英雄联盟,lol,lol战斗力查询,lol隐藏分,lol mmr,英雄联盟战斗力查询,英雄联盟隐藏分查询,多玩lol战斗力查询,英雄联盟战绩查询,lol大神视频,lol大神,lol英雄胜率, lolmvp,lol常用英雄,lol各模式战绩,moba游戏" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %></title>
 
@@ -62,9 +64,9 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/">战绩查询</a></li>
+                        <%--<li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href="~/Contact">Contact</a></li>--%>
                     </ul>
                 </div>
             </div>

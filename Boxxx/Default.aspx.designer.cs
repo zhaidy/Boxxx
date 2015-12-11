@@ -58,6 +58,15 @@ namespace Boxxx {
         protected global::System.Web.UI.WebControls.Panel pnlMainContent;
         
         /// <summary>
+        /// divMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMsg;
+        
+        /// <summary>
         /// lblMsg control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace Boxxx {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMsg;
+        
+        /// <summary>
+        /// divLeft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLeft;
         
         /// <summary>
         /// gvPlayerProfile control.
@@ -94,6 +112,15 @@ namespace Boxxx {
         protected global::System.Web.UI.WebControls.Repeater gvNormalStat;
         
         /// <summary>
+        /// divMid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMid;
+        
+        /// <summary>
         /// gvMatchList control.
         /// </summary>
         /// <remarks>
@@ -101,6 +128,15 @@ namespace Boxxx {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvMatchList;
+        
+        /// <summary>
+        /// divRight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRight;
         
         /// <summary>
         /// gvPlayedChamps control.

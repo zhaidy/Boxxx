@@ -9,23 +9,14 @@
 
         // Called when async postback begins
         function prm_InitializeRequest(sender, args) {
-            $("<div class='loader'><div class='circle'></div><div class='circle'></div><div class='circle'></div></div>").appendTo(document.body);
+            $("<div class='wrapper'><div class='ball ball-1'></div><div class='ball ball-2'></div><div class='ball ball-3'></div></div>").appendTo(document.body);
         }
 
         // Called when async postback ends
         function prm_EndRequest(sender, args) {
-            $('.loader').remove();
-            //Scroll();
+            $('.wrapper').remove();
+            Scroll();
         }
-
-        $(document).on('click', '[src*=plus]', function (e) {
-            $(this).closest("tr").after("<tr><td></td><td colspan = '999' style='text-align: center'>" + $(this).next().html() + "</td></tr>")
-            $(this).attr("src", "Images/minus.png");
-        });
-        $(document).on('click', '[src*=minus]', function (e) {
-            $(this).attr("src", "Images/plus.png");
-            $(this).closest("tr").next().remove();
-        });
         //$(function () {
         //    $('.toggle').click(function (e) {
         //        $(this).find('.icon').toggleClass('icon-chevron-thin-down icon-chevron-thin-up')
@@ -55,7 +46,8 @@
         }
     </script>
 
-    <div class="panel panel-default" align="center">
+    <div class="panel panel-default panel-profile" align="center">
+        <div class="panel-heading" style="background-image: url(Images/bg11.jpg); background-position:center; position: relative; height: 0; padding-bottom: 40%;"></div>
         <div class="panel-body">
             <div class="form-inline">
                 <div class="form-group">
@@ -91,7 +83,7 @@
                 </div>
                 <div class="form-group">
                     <%-- <label class="control-label">游戏ID</label>--%>
-                    <asp:TextBox ID="txtPlayerId" runat="server" Text="我不是个善良的人" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="txtPlayerId" runat="server" Text="" CssClass="form-control" placeholder="召唤师ID"></asp:TextBox>
                 </div>
                 <asp:Button ID="btnSubmit" runat="server" Text="查询" OnClick="btnSubmit_Click" CssClass="btn btn-primary btn-pill btnSubmit" />
             </div>
@@ -102,16 +94,25 @@
             <ContentTemplate>
                 <div id="divMain">
                     <asp:Panel ID="pnlMainContent" runat="server">
-                        <asp:Label ID="lblMsg" runat="server" Text=""></asp:Label>
-                        <div class="col-md-3">
+                        <div class="row">
+                            <div class="growl growl-static col-sm-offset-4" runat="server" id="divMsg">
+                            <div class="alert alert-danger alert-dismissable m-r-md" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <asp:Label ID="lblMsg" runat="server" style="font-weight: bold;">暂无数据</asp:Label>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-3" id="divLeft" runat="server">
                             <div class="panel panel-default panel-profile">
                                 <div class="panel-heading" style="background-image: url(Images/bg7.jpg);"></div>
                                 <div class="panel-body text-center">
                                     <asp:Repeater ID="gvPlayerProfile" runat="server" OnItemDataBound="gvPlayerProfile_ItemDataBound">
                                         <ItemTemplate>
                                             <asp:Image ID="imgIcon" runat="server" ImageUrl='<%# Bind("icon") %>' CssClass="panel-profile-img" />
-                                            <h5 class="panel-title" runat="server"><%# Eval("player_id") %> <span class="badge"><%# Eval("level") %></span></h5>
-                                            <h5><span class="label label-primary"><%# Eval("fighting") %></span></h5>
+                                            <h5 class="panel-title" runat="server"></span> <%# Eval("player_id") %></h5>
+                                            <p><span class="label label-success"><%# Eval("level") %></span> <span class="label label-primary"><%# Eval("fighting") %></span></p>
                                             <ul class="avatar-list m-b-md">
                                                 <asp:Repeater ID="gvComChamp" runat="server">
                                                     <ItemTemplate>
@@ -178,16 +179,16 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="divMid" runat="server">
                             <ul class="media-list media-list-users list-group">
-                                <asp:GridView ID="gvMatchList" runat="server" ShowHeader="false" GridLines="None" AutoGenerateColumns="false" DataKeyNames="id"
+                                <asp:GridView ID="gvMatchList" runat="server" ShowHeader="false" GridLines="None" AutoGenerateColumns="false" DataKeyNames="id" PageSize="8"
                                     AllowPaging="true" OnPageIndexChanging="gvMatchList_PageIndexChanging" OnRowDataBound="gvMatchList_RowDataBound">
                                     <Columns>
                                         <asp:TemplateField>
                                             <ItemTemplate>
                                                 <a class="list-group-item showModal" style="cursor: pointer;">
                                                     <div class="media">
-                                                        <div class="media-left">
+                                                        <div class="media-left media-middle">
                                                             <asp:Image class="media-object img-circle" ID="imgIcon" runat="server" ImageUrl='<%# Bind("icon") %>' ToolTip='<%# Bind("champion_name_ch") %>' />
                                                         </div>
                                                         <div class="media-body">
@@ -215,11 +216,11 @@
                                 </asp:GridView>
                             </ul>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="divRight" runat="server">
                             <div>
                                 <ul class="media-list media-list-users list-group">
                                     <asp:GridView ID="gvPlayedChamps" runat="server" ShowHeader="false" GridLines="None" AutoGenerateColumns="false"
-                                        AllowPaging="true" OnPageIndexChanging="gvPlayedChamps_PageIndexChanging" EnableSortingAndPagingCallbacks="true">
+                                        AllowPaging="true" OnPageIndexChanging="gvPlayedChamps_PageIndexChanging" EnableSortingAndPagingCallbacks="true" PageSize="8">
                                         <Columns>
                                             <asp:TemplateField>
                                                 <ItemTemplate>
@@ -262,141 +263,249 @@
                     </asp:Panel>
                 </div>
                 <div id="modalMatchDetail" class="modal fade" tabindex="-1" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close closeb" data-dismiss="modal">×</button>
-                                <h3>Modal header</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">比赛详情</h4>
                             </div>
                             <div class="modal-body">
-                                <ul class="media-list media-list-users list-group">
-                                    <asp:Repeater runat="server" ID="gvMatchDetailsA">
-                                        <ItemTemplate>
-                                            <li class="list-group-item">
-                                                <table class="table table-condensed borderless">
-                                                    <tr>
-                                                        <th>英雄</th>
-                                                        <th>召唤师</th>
-                                                        <th>经济</th>
-                                                        <th>KDA</th>
-                                                        <th>出装</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <asp:Image class="media-object img-circle iconChamp" ID="imgChampIcon" runat="server" ImageUrl='<%# Bind("champIcon") %>' ToolTip='<%# Bind("champion_name_ch") %>' />
-                                                            <p>
-                                                                <asp:Image CssClass="img-circle iconItem" ID="spell1Icon" runat="server" ImageUrl='<%# Bind("firstSpellIcon") %>' />
-                                                                <asp:Image CssClass="img-circle iconItem" ID="spell2Icon" runat="server" ImageUrl='<%# Bind("secondSpellIcon") %>' />
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <asp:Label ID="lblPlayerId" runat="server" Text='<%# Bind("playerId") %>'></asp:Label>
-                                                            <asp:HiddenField ID="hfMatchId" runat="server" Value='<%# Eval("matchId") %>' />
-                                                        </td>
-                                                        <td>
-                                                            <span class="label label-warning"><%# Eval("gold") %></span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="label label-primary"><%# Eval("KDA") %></span>
-                                                        </td>
-                                                        <td>
-                                                            <asp:GridView ID="gvItemsA" runat="server" AutoGenerateColumns="false" ShowHeader="false" BorderWidth="0px">
-                                                                <Columns>
-                                                                    <asp:TemplateField>
-                                                                        <ItemTemplate>
-                                                                            <asp:Image ID="itemIcon1" runat="server" ImageUrl='<%# Bind("itemIcon1") %>' ToolTip='<%# Bind("itemDesc1") %>' />
-                                                                            <asp:Image ID="itemIcon2" runat="server" ImageUrl='<%# Bind("itemIcon2") %>' ToolTip='<%# Bind("itemDesc2") %>' />
-                                                                            <asp:Image ID="itemIcon3" runat="server" ImageUrl='<%# Bind("itemIcon3") %>' ToolTip='<%# Bind("itemDesc3") %>' />
-                                                                            <asp:Image ID="itemIcon4" runat="server" ImageUrl='<%# Bind("itemIcon4") %>' ToolTip='<%# Bind("itemDesc4") %>' />
-                                                                            <asp:Image ID="itemIcon5" runat="server" ImageUrl='<%# Bind("itemIcon5") %>' ToolTip='<%# Bind("itemDesc5") %>' />
-                                                                            <asp:Image ID="itemIcon6" runat="server" ImageUrl='<%# Bind("itemIcon6") %>' ToolTip='<%# Bind("itemDesc6") %>' />
-                                                                            <asp:Image ID="itemIcon7" runat="server" ImageUrl='<%# Bind("itemIcon7") %>' ToolTip='<%# Bind("itemDesc7") %>' />
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                </Columns>
-                                                            </asp:GridView>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <div class="collapse">
-                                                    <div class="well">
-                                                        <span class="label label-info"><%# Eval("lastHits") %></span>
-                                                        <span class="label label-success"><%# Eval("wards") %></span>
-                                                        <span class="label label-warning"><%# Eval("dewards") %></span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </ul>
-                                <ul class="media-list media-list-users list-group">
-                                    <asp:Repeater runat="server" ID="gvMatchDetailsB">
-                                        
-                                        <ItemTemplate>
-                                            <li class="list-group-item">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <asp:Image class="media-object img-circle iconChamp" ID="imgChampIcon" runat="server" ImageUrl='<%# Bind("champIcon") %>' ToolTip='<%# Bind("champion_name_ch") %>' />
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <strong>
-                                                            <asp:Label ID="lblPlayerId" runat="server" Text='<%# Bind("playerId") %>'></asp:Label>
-                                                            <asp:HiddenField ID="hfMatchId" runat="server" Value='<%# Eval("matchId") %>' />
-                                                        </strong>
-                                                        <div class="media-heading">
-                                                            <span>KDA</span>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5 class="text-success">胜利方</h5>
+                                        <ul class="media-list media-list-users list-group">
+                                            <asp:Repeater runat="server" ID="gvMatchDetailsA">
+                                                <ItemTemplate>
+                                                    <a class="list-group-item" data-toggle="collapse" href='<%# "#a" + Eval("playerId") %>' id='<%# "linkA" + Eval("playerId") %>'
+                                                        aria-expanded="false" aria-controls='<%# Eval("playerId") %>'>
+                                                        <table class="table table-condensed borderless text-center table-mid">
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th>经济</th>
+                                                                <th>KDA</th>
+                                                                <th>出装</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Image class="media-object img-circle iconChamp" ID="imgChampIcon" runat="server" ImageUrl='<%# Bind("champIcon") %>' ToolTip='<%# Bind("champion_name_ch") %>' />
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Image CssClass="img-circle iconItem" ID="spell1Icon" runat="server" ImageUrl='<%# Bind("firstSpellIcon") %>' />
+                                                                    <asp:Image CssClass="img-circle iconItem" ID="spell2Icon" runat="server" ImageUrl='<%# Bind("secondSpellIcon") %>' />
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label ID="lblPlayerId" runat="server" Text='<%# Bind("playerId") %>'></asp:Label>
+                                                                    <asp:HiddenField ID="hfMatchId" runat="server" Value='<%# Eval("matchId") %>' />
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-success"><%# Eval("gold") %></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-primary"><%# Eval("KDA") %></span>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:GridView ID="gvItemsA" runat="server" AutoGenerateColumns="false" ShowHeader="false" BorderWidth="0px">
+                                                                        <Columns>
+                                                                            <asp:TemplateField>
+                                                                                <ItemTemplate>
+                                                                                    <asp:Image ID="itemIcon1" runat="server" ImageUrl='<%# Bind("itemIcon1") %>' ToolTip='<%# Bind("itemDesc1") %>' />
+                                                                                    <asp:Image ID="itemIcon2" runat="server" ImageUrl='<%# Bind("itemIcon2") %>' ToolTip='<%# Bind("itemDesc2") %>' />
+                                                                                    <asp:Image ID="itemIcon3" runat="server" ImageUrl='<%# Bind("itemIcon3") %>' ToolTip='<%# Bind("itemDesc3") %>' />
+                                                                                    <asp:Image ID="itemIcon4" runat="server" ImageUrl='<%# Bind("itemIcon4") %>' ToolTip='<%# Bind("itemDesc4") %>' />
+                                                                                    <asp:Image ID="itemIcon5" runat="server" ImageUrl='<%# Bind("itemIcon5") %>' ToolTip='<%# Bind("itemDesc5") %>' />
+                                                                                    <asp:Image ID="itemIcon6" runat="server" ImageUrl='<%# Bind("itemIcon6") %>' ToolTip='<%# Bind("itemDesc6") %>' />
+                                                                                    <asp:Image ID="itemIcon7" runat="server" ImageUrl='<%# Bind("itemIcon7") %>' ToolTip='<%# Bind("itemDesc7") %>' />
+                                                                                </ItemTemplate>
+                                                                            </asp:TemplateField>
+                                                                        </Columns>
+                                                                    </asp:GridView>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </a>
+                                                    <div class="collapse" id='<%# "a" + Eval("playerId") %>'>
+                                                        <div class="well">
+                                                            <div class="media">
+                                                                <div class="media-body text-center">
+                                                                    <p>
+                                                                        <span>战局评分: </span>
+                                                                        <span class="label label-success"><%# Eval("warScore") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>补刀: </span>
+                                                                        <span class="label label-info"><%# Eval("lastHits") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>插眼/排眼: </span>
+                                                                        <span class="label label-primary"><%# Eval("wards") %></span>
+                                                                        <span class="label label-warning"><%# Eval("dewards") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>推塔/兵营: </span>
+                                                                        <span class="label label-success"><%# Eval("towersDestroyed") %></span>
+                                                                        <span class="label label-info"><%# Eval("barracksDestroyed") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>最大连杀/最大多杀: </span>
+                                                                        <span class="label label-primary"><%# Eval("maxContKills") %></span>
+                                                                        <span class="label label-warning"><%# Eval("maxMultiKills") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>最大暴击: </span>
+                                                                        <span class="label label-danger"><%# Eval("maxCrit") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>总治疗: </span>
+                                                                        <span class="label label-success"><%# Eval("totalHeal") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>输出伤害/承受伤害: </span>
+                                                                        <span class="label label-primary"><%# Eval("totalDmg") %></span>
+                                                                        <span class="label label-warning"><%# Eval("totalTank") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>对英雄总伤害: </span>
+                                                                        <span class="label label-success"><%# Eval("totalHeroDmg") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>对英雄物理伤害/对英雄魔法伤害: </span>
+                                                                        <span class="label label-danger"><%# Eval("totalHeroPhyDmg") %></span>
+                                                                        <span class="label label-primary"><%# Eval("totalHeroMagicDmg") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>对英雄真实伤害: </span>
+                                                                        <span class="label label-success"><%# Eval("totalHeroTrueDmg") %></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <span class="label label-primary"><%# Eval("KDA") %></span>
-                                                        <span class="label label-warning"><%# Eval("gold") %></span>
-                                                        <span class="label label-info"><%# Eval("lastHits") %></span>
-                                                        <span class="label label-success"><%# Eval("wards") %></span>
-                                                        <span class="label label-warning"><%# Eval("dewards") %></span>
-                                                        <ul class="avatar-list">
-                                                            <li class="avatar-list-item">
-                                                                <asp:Image CssClass="img-circle iconItem" ID="spell1Icon" runat="server" ImageUrl='<%# Bind("firstSpellIcon") %>' />
-                                                            </li>
-                                                            <li class="avatar-list-item">
-                                                                <asp:Image CssClass="img-circle iconItem" ID="spell2Icon" runat="server" ImageUrl='<%# Bind("secondSpellIcon") %>' />
-                                                            </li>
-                                                        </ul>
-                                                        <asp:Repeater runat="server" ID="gvItemsB">
-                                                            <ItemTemplate>
-                                                                <ul class="avatar-list">
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon1" runat="server" ImageUrl='<%# Bind("itemIcon1") %>' ToolTip='<%# Bind("itemDesc1") %>' />
-                                                                    </li>
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon2" runat="server" ImageUrl='<%# Bind("itemIcon2") %>' ToolTip='<%# Bind("itemDesc2") %>' />
-                                                                    </li>
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon3" runat="server" ImageUrl='<%# Bind("itemIcon3") %>' ToolTip='<%# Bind("itemDesc3") %>' />
-                                                                    </li>
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon4" runat="server" ImageUrl='<%# Bind("itemIcon4") %>' ToolTip='<%# Bind("itemDesc4") %>' />
-                                                                    </li>
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon5" runat="server" ImageUrl='<%# Bind("itemIcon5") %>' ToolTip='<%# Bind("itemDesc5") %>' />
-                                                                    </li>
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon6" runat="server" ImageUrl='<%# Bind("itemIcon6") %>' ToolTip='<%# Bind("itemDesc6") %>' />
-                                                                    </li>
-                                                                    <li class="avatar-list-item">
-                                                                        <asp:Image CssClass="iconItem" ID="itemIcon7" runat="server" ImageUrl='<%# Bind("itemIcon7") %>' ToolTip='<%# Bind("itemDesc7") %>' />
-                                                                    </li>
-                                                                </ul>
-                                                            </ItemTemplate>
-                                                        </asp:Repeater>
                                                     </div>
-                                                </div>
-                                            </li>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn closeb" data-dismiss="modal">Close</button>
-                            </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h5 class="text-danger">失败方</h5>
+                                        <ul class="media-list media-list-users list-group">
+                                            <asp:Repeater runat="server" ID="gvMatchDetailsB">
+                                                <ItemTemplate>
+                                                    <a class="list-group-item" data-toggle="collapse" href='<%# "#b" + Eval("playerId") %>' id='<%# "linkB" + Eval("playerId") %>'
+                                                        aria-expanded="false" aria-controls='<%# Eval("playerId") %>'>
+                                                        <table class="table table-condensed borderless text-center table-mid">
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th>经济</th>
+                                                                <th>KDA</th>
+                                                                <th>出装</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Image class="media-object img-circle iconChamp" ID="imgChampIcon" runat="server" ImageUrl='<%# Bind("champIcon") %>' ToolTip='<%# Bind("champion_name_ch") %>' />
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Image CssClass="img-circle iconItem" ID="spell1Icon" runat="server" ImageUrl='<%# Bind("firstSpellIcon") %>' />
+                                                                    <asp:Image CssClass="img-circle iconItem" ID="spell2Icon" runat="server" ImageUrl='<%# Bind("secondSpellIcon") %>' />
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label ID="lblPlayerId" runat="server" Text='<%# Bind("playerId") %>'></asp:Label>
+                                                                    <asp:HiddenField ID="hfMatchId" runat="server" Value='<%# Eval("matchId") %>' />
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-success"><%# Eval("gold") %></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-primary"><%# Eval("KDA") %></span>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:GridView ID="gvItemsB" runat="server" AutoGenerateColumns="false" ShowHeader="false" BorderWidth="0px">
+                                                                        <Columns>
+                                                                            <asp:TemplateField>
+                                                                                <ItemTemplate>
+                                                                                    <asp:Image ID="itemIcon1" runat="server" ImageUrl='<%# Bind("itemIcon1") %>' ToolTip='<%# Bind("itemDesc1") %>' />
+                                                                                    <asp:Image ID="itemIcon2" runat="server" ImageUrl='<%# Bind("itemIcon2") %>' ToolTip='<%# Bind("itemDesc2") %>' />
+                                                                                    <asp:Image ID="itemIcon3" runat="server" ImageUrl='<%# Bind("itemIcon3") %>' ToolTip='<%# Bind("itemDesc3") %>' />
+                                                                                    <asp:Image ID="itemIcon4" runat="server" ImageUrl='<%# Bind("itemIcon4") %>' ToolTip='<%# Bind("itemDesc4") %>' />
+                                                                                    <asp:Image ID="itemIcon5" runat="server" ImageUrl='<%# Bind("itemIcon5") %>' ToolTip='<%# Bind("itemDesc5") %>' />
+                                                                                    <asp:Image ID="itemIcon6" runat="server" ImageUrl='<%# Bind("itemIcon6") %>' ToolTip='<%# Bind("itemDesc6") %>' />
+                                                                                    <asp:Image ID="itemIcon7" runat="server" ImageUrl='<%# Bind("itemIcon7") %>' ToolTip='<%# Bind("itemDesc7") %>' />
+                                                                                </ItemTemplate>
+                                                                            </asp:TemplateField>
+                                                                        </Columns>
+                                                                    </asp:GridView>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </a>
+                                                    <div class="collapse" id='<%# "b" + Eval("playerId") %>'>
+                                                        <div class="well">
+                                                            <div class="media">
+                                                                <div class="media-body text-center">
+                                                                    <p>
+                                                                        <span>战局评分: </span>
+                                                                        <span class="label label-success"><%# Eval("warScore") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>补刀: </span>
+                                                                        <span class="label label-info"><%# Eval("lastHits") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>插眼/排眼: </span>
+                                                                        <span class="label label-primary"><%# Eval("wards") %></span>
+                                                                        <span class="label label-warning"><%# Eval("dewards") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>推塔/兵营: </span>
+                                                                        <span class="label label-success"><%# Eval("towersDestroyed") %></span>
+                                                                        <span class="label label-info"><%# Eval("barracksDestroyed") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>最大连杀/最大多杀: </span>
+                                                                        <span class="label label-primary"><%# Eval("maxContKills") %></span>
+                                                                        <span class="label label-warning"><%# Eval("maxMultiKills") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>最大暴击: </span>
+                                                                        <span class="label label-danger"><%# Eval("maxCrit") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>总治疗: </span>
+                                                                        <span class="label label-success"><%# Eval("totalHeal") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>输出伤害/承受伤害: </span>
+                                                                        <span class="label label-primary"><%# Eval("totalDmg") %></span>
+                                                                        <span class="label label-warning"><%# Eval("totalTank") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>对英雄总伤害: </span>
+                                                                        <span class="label label-success"><%# Eval("totalHeroDmg") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>对英雄物理伤害/对英雄魔法伤害: </span>
+                                                                        <span class="label label-danger"><%# Eval("totalHeroPhyDmg") %></span>
+                                                                        <span class="label label-primary"><%# Eval("totalHeroMagicDmg") %></span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <span>对英雄真实伤害: </span>
+                                                                        <span class="label label-success"><%# Eval("totalHeroTrueDmg") %></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ul>
+                                    </div>
+                                </div>
                         </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger-outline" data-dismiss="modal">关闭</button>
+                            </div>
                     </div>
                 </div>
             </ContentTemplate>
