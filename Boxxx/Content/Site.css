@@ -202,3 +202,12 @@ textarea {
     transform: rotate(0deg) translate(0vmax, -10vmax);
   }
 }
+
+iconChamp{
+    width: 28px;
+    height: 28px;
+}
+iconItem{
+    width: 24px;
+    height: 24px;
+}
